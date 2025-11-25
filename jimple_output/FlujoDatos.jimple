@@ -1,0 +1,61 @@
+public class FlujoDatos extends java.lang.Object
+{
+
+    public void <init>()
+    {
+        FlujoDatos r0;
+
+        r0 := @this: FlujoDatos;
+
+        specialinvoke r0.<java.lang.Object: void <init>()>();
+
+        return;
+    }
+
+    public static int ejemplo(int, int)
+    {
+        int i0, i1, $i2, i3, i4;
+
+        i0 := @parameter0: int;
+
+        i1 := @parameter1: int;
+
+        i3 = i0 + 1;
+
+        if i3 >= i1 goto label1;
+
+        i4 = i3 * 2;
+
+        i3 = i4 - i0;
+
+        goto label2;
+
+     label1:
+        i4 = i1 - 1;
+
+     label2:
+        $i2 = i3 + i4;
+
+        return $i2;
+    }
+
+    public static void main(java.lang.String[])
+    {
+        java.io.PrintStream $r0;
+        int i0;
+        java.lang.String[] r2;
+        java.lang.String $r1;
+
+        r2 := @parameter0: java.lang.String[];
+
+        i0 = staticinvoke <archivos.FlujoDatos: int ejemplo(int,int)>(3, 7);
+
+        $r0 = <java.lang.System: java.io.PrintStream out>;
+
+        $r1 = dynamicinvoke "makeConcatWithConstants" <java.lang.String (int)>(i0) <java.lang.invoke.StringConcatFactory: java.lang.invoke.CallSite makeConcatWithConstants(java.lang.invoke.MethodHandles$Lookup,java.lang.String,java.lang.invoke.MethodType,java.lang.String,java.lang.Object[])>("resultado: \u0001");
+
+        virtualinvoke $r0.<java.io.PrintStream: void println(java.lang.String)>($r1);
+
+        return;
+    }
+}

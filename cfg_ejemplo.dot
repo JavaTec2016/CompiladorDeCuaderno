@@ -1,0 +1,76 @@
+digraph "int ejemplo(int,int)" {
+    label="int ejemplo(int,int)";
+    node [shape=box];
+    "0" [style=filled,fillcolor=gray,label="i0 := @parameter0",];
+    "1" [label="i1 := @parameter1",];
+    "0"->"1";
+    "2" [label="i3 = i0 + 1",];
+    "1"->"2";
+    "3" [label="if i3 >= i1 goto label1",];
+    "2"->"3";
+    "4" [label="i4 = i3 * 2",];
+    "3"->"4";
+    "7" [label="label1: i4 = i1 - 1",];
+    "3"->"7";
+    "5" [label="i3 = i4 - i0",];
+    "4"->"5";
+    "6" [label="goto label2",];
+    "5"->"6";
+    "8" [label="label2: $i2 = i3 + i4",];
+    "6"->"8";
+    "7"->"8";
+    "9" [style=filled,fillcolor=lightgray,label="return $i2",];
+    "8"->"9";
+}
+
+
+Creación de código intermedio simplificado Java (Jimple)
+
+Para esta práctica se utilizaron las librerías PackManager, Soot y sus dependencias en un programa de Java para compilar y generar código intermedio de otro.
+
+Se realizó un primer intento para generar el código intermedio de un programa llamado FlujoDatos utilizando la consola de comandos mediante los siguientes comandos:
+
+El programa FlujoDatos es el programa de ejemplo que se compilará para generar código intermedio.
+
+
+El programa GenerarJimple es el programa en donde se utilizan las librerías Soot para generar los códigos de FlujoDatos.
+
+El primer paso es compilar el programa: javac FlujoDatos.java
+
+El segundo paso es ejecutar la librería de Soot con los siguientes parámetros: 
+java -cp “.;soot-4.6.0-jar-with-dependencies.jar” soot.Main -cp . -pp -process-dir . -f J -d salida
+
+
+Sin embargo, ocurrieron múltiples problemas relacionados a dependencias y rutas al ejecutar el comando, por lo que se recurrió a utilizar el programa.
+
+
+código de GenerarJimple:
+
+
+
+Al ejecutar el programa se obtiene el .jimple de FlujoDatos en una carpeta externa:
+
+
+FlujoDatos.jimple muestra el siguiente código:
+
+
+
+Generación de Flujo de Datos en Java
+Para esta práctica se utilizaron las librerías Soot y sus dependencias en conjunto con el software Graphviz en un programa de Java para compilar y generar el flujo de datos de otro programa tanto en texto como en diagrama.
+
+El programa a graficar es FlujoDatos, el mismo de la práctica anterior.
+El programa encargado de generar el flujo de datos es GenerarCFG:
+
+
+Es necesario importar la libreria de Soot en el IDE para poder utilizarla:
+
+El programa procesa el código de FlujoDatos y genera un archivo .dot (cfg_ejemplo.dot) en el directorio en donde se ubica la carpeta src. Su contenido es el siguiente:
+
+
+Posteriormente se utilizó Graphviz para generar un gráfico png a partir del archivo, utilizando el comando:
+dot -Tpng cfg_ejemplo.dot -o cfg_ejemplo.png
+
+Produciendo el siguiente gráfico:
+
+
+

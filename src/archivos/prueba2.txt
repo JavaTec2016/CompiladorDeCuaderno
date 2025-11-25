@@ -1,0 +1,9 @@
+for(int i = 0; i < 2; i=i+1;){
+
+    double promedio = 0;
+
+    for(int j = 2; j < i; j=j+1;){
+        promedio = promedio+j;
+    }
+    promedio = promedio / j;
+}
