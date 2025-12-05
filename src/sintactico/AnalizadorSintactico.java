@@ -136,7 +136,7 @@ public class AnalizadorSintactico {
             vuelta++;
 
             System.out.println(nodoCopia.size() + ", modificacion: " + coincidencia);
-        }while(nodoCopia.size() > 1 && coincidencia);
+        }while(coincidencia);
         nodos.addAll(nodoCopia);
     }
     public static void iniciar(){

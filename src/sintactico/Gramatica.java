@@ -241,7 +241,6 @@ public class Gramatica {
             public NodoTipable realizar(String fuente, String token, ArrayList<NodoBinario> nodos) throws Exception {
                 NodoTipable exp = (NodoTipable) nodos.get(0);
                 NodoTipable out = new NodoTipable(fuente, token, exp);
-                System.out.println(exp.partes);
                 out.setChild(exp);
                 out.setChild(nodos.get(1));
                 out.setExceptionMensaje("Operacion incompleta");
@@ -301,10 +300,19 @@ public class Gramatica {
                 out.setChild(nodos.get(0));
                 out.setChild(nodos.get(1));
                 out.setExceptionMensaje("Sentencia fuera de bloque");
-
-
-                Aritmo.parse(Aritmo.nodosAPostFija(Scanner.scanAritmetica(out)));
+                //Aritmo.parse(Aritmo.nodosAPostFija(Scanner.scanAritmetica(out)));
                 //System.out.println();
+                return out;
+            }
+        });
+        agregarRegla("expresionOperador sentenciaAsignable", "sentenciaAsignable", new Accionable<Sentencia>() {
+            @Override
+            public Sentencia realizar(String fuente, String token, ArrayList<NodoBinario> nodos) throws Exception {
+                NodoTipable exp = (NodoTipable) nodos.get(0);
+                Sentencia out = new Sentencia(fuente, token, exp);
+                out.setChild(exp);
+                out.setChild(nodos.get(1));
+                out.setExceptionMensaje("Operacion incompleta");
                 return out;
             }
         });
@@ -313,6 +321,8 @@ public class Gramatica {
             public Sentencia realizar(String fuente, String token, ArrayList<NodoBinario> nodos) throws Exception {
                 Sentencia out = new Sentencia(fuente, token, (NodoTipable) nodos.get(0));
                 out.setChild(nodos.get(0));
+                Asignacion asig = ((Asignacion)nodos.get(0));
+                Aritmo.intermedioFor(asig.declaracion.identificador.fuente, asig.sentencia);
                 return out;
             }
         });

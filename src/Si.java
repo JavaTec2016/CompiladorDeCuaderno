@@ -1,3 +1,4 @@
+import Scan.Aritmo;
 import acciones.Semanticas;
 import lexico.AnalizadorLexico;
 import simbolo.TablaSimbolos;
@@ -23,5 +24,6 @@ public class Si {
         System.out.println(AnalizadorSintactico.nodos);
         System.out.println("=======TABLA DE SIMBOLOS======");
         TablaSimbolos.print();
+        Aritmo.printExps();
     }
 }

@@ -7,7 +7,7 @@ import sintactico.NodoTipable;
 import java.util.HashMap;
 
 public class TablaSimbolos {
-    static HashMap<String, FilaSimbolos> tabla = new HashMap<>();
+    public  static HashMap<String, FilaSimbolos> tabla = new HashMap<>();
     static int anonimoContador = 0;
     public static void agregarSimbolo(FilaSimbolos fila){
         tabla.put(fila.identificador, fila);
