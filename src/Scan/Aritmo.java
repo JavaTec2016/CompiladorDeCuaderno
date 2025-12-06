@@ -23,7 +23,7 @@ public class Aritmo {
         jerarquia.put("/", 2);
         jerarquia.put("%", 2);
         jerarquia.put("^", 3);
-        jerarquia.put("(", 5);
+        jerarquia.put("(", 0);
         jerarquia.put(")", 6);
     }
     /**
@@ -46,22 +46,14 @@ public class Aritmo {
                 System.out.println("AGREGA OPERANDO/PARENTEIS: " + nodoBinario.fuente);
                 post.add(nodoBinario);
             } else {//switch piraton pa no anidar ifs
+
                 if(pila.isEmpty()) {
                     System.out.println("APILA PRIMER OPERADOR: " + nodoBinario.fuente);
                     pila.push(nodoBinario);
                     continue;
-                }
-                if(jer <= getJerarquia(pila.peek())) {
-                    System.out.println("APILA OPERADOR: " + nodoBinario.fuente);
-                    pila.push(nodoBinario);
-                    continue;
-                }
-                /*
-                 * Ultimo caso: operacion de mayor jerarquia
-                 * si es parentesis cerrado: desapilar hasta el primer parentesis abierto, no agregar parentesis
-                 *  si es operador: agregar y desapilar todos los operadores de menor jerarquia
-                 */
-                if(jer == jerarquia.get(")")){
+
+                    //desapila parentetica
+                }else if(jer == jerarquia.get(")")){
                     while (getJerarquia(pila.peek()) != jerarquia.get("(")){
                         System.out.println("DESAPILA OPERADOR POR PARENTESIS: " + pila.peek().fuente);
                         post.add(pila.pop());
@@ -69,13 +61,29 @@ public class Aritmo {
                     pila.pop();//queda el parentesis, no deberia necesitar el chequeo
                     continue;
                 }
-                post.add(nodoBinario);
-                while (!pila.isEmpty() && getJerarquia(pila.peek()) < jer){
-                    System.out.println("DESAPILA OPERADOR: " + pila.peek().fuente);
-                    post.add(pila.pop());
+
+                //desapila natural
+                if(jer <= getJerarquia(pila.peek())) {
+                    //pop operadores de mayor precedencia
+                    while(!pila.isEmpty() && jer < getJerarquia(pila.peek())){
+                        System.out.println("DESAPILA OPERADOR: " + pila.peek().fuente);
+                        post.add(pila.pop());
+                    }
+                    System.out.println("APILA OPERADOR: " + nodoBinario.fuente);
+                    pila.push(nodoBinario);
+                    continue;
                 }
+
+                //apila
+                else {
+                    System.out.println("APILA OPERADOR: " + pila.peek().fuente);
+                    pila.push(nodoBinario);
+                }
+
             }
         }
+
+        //vaciar la pila
         while(!pila.isEmpty()){
             System.out.println("AGREGA OPERADOR FINAL: " + pila.peek().fuente);
             post.add(pila.pop());
@@ -170,11 +178,6 @@ public class Aritmo {
         ArrayList<NodoBinario> postfija = Aritmo.nodosAPostFija(escaneado);
         NodoBinario result = Aritmo.parse(postfija);
         String exp = result.fuente;
-        /**
-         * el chiste es meter la expresion en el coso de expresiones
-         * agrega todo auto
-         * solo queda el nodo resultante y lo parseado
-         */
         System.out.println("ID: "+exp);
         /**
          * exp: k, id: p
@@ -183,23 +186,16 @@ public class Aritmo {
          * ya existe
          *      sacar la id de k => p
          *      agregar como exp => (p, l)
-         *
          */
         if(id == null) return;
         if(!expresiones.containsKey(exp)){
             expresiones.put(exp, id);
             valores.put(id, exp);
-
-        //la exp resultante ya existe, normalmente se salta el agregarla
-            //pero es una variable, a fuerza tiene que agregarse
-            //pero una expresion puede existir una vez en la tabla
         }else {
-            //hay que sacar la cadena de reutilizacion, de lo contrario no se ponen las variables
             String expFinal = exp;
             while(expresiones.get(expFinal) != null){
                 expFinal = expresiones.get(expFinal);
             }
-            System.out.println("REPETIDA: " + expFinal);
             expresiones.put(expFinal, id);
             valores.put(id, expFinal);
         }
